@@ -28,7 +28,39 @@ public class MecanumDriveCommand extends Command {
 
 	@Override
 	public void update() {
-		Robot.drivetrain.setSpeed(Input.getAxis(0), Input.getAxis(1), Input.getAxis(5), 0);
-		}
+		Robot.drivetrain.setSpeed(normalize(quadraticScale(xInput) + quadraticScale(yInput) + quadraticScale(rotation)),
+				normalize(-quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)),
+				normalize(-quadraticScale(xInput) + quadraticScale(yInput) + quadraticScale(rotation)),
+				normalize(quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)), 0);
 
 	}
+
+	double xInput = Input.getAxis(0);
+	double yInput = Input.getAxis(1);
+	double rotation = Input.getAxis(5);
+
+	// double gyroAngle = PositionTracker.direction();
+
+	/*
+	 * double rotated[] = rotateVector(xInput, yInput, gyroAngle); xInput =
+	 * rotated[0]; yInput = rotated[1];
+	 */
+	// put this back in if we ever want to use a gyroscope
+
+	protected static double normalize(double value) {
+		if (value > 1.0)
+			return 1;
+		if (value < -1.0)
+			return -1;
+		else
+			return value;
+	}
+}
+// put this back in if we ever want to use a gyroscope
+/*
+ * public static double[] rotateVector(double xInput, double yInput, double
+ * gyroAngle) { double cosA = Math.cos(gyroAngle * (3.14159 / 180.0)); double
+ * sinA = Math.sin(gyroAngle * (3.14159 / 180.0)); double out[] = new double[2];
+ * out[0] = xInput * cosA - yInput * sinA; out[1] = xInput * sinA + yInput *
+ * cosA; return out; }
+ */
