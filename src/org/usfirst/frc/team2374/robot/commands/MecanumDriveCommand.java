@@ -10,13 +10,8 @@ import org.usfirst.frc.team2374.robot.events.Input;
 
 public class MecanumDriveCommand extends Command {
 
-	public boolean axisZeroInput() {
-		return quadraticScale(Input.getAxis(0)) != 0;
-	}
-
 	@Override
 	public boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -33,17 +28,7 @@ public class MecanumDriveCommand extends Command {
 
 	@Override
 	public void update() {
-		if (axisZeroInput()) {
-			Robot.drivetrain.setSpeed(quadraticScale(Input.getAxis(0)),
-					-quadraticScale(Input.getAxis(0)),
-					-quadraticScale(Input.getAxis(0)),
-					quadraticScale(Input.getAxis(0)));
-		} else {
-			Robot.drivetrain.setSpeed(quadraticScale(Input.getAxis(1)),
-					quadraticScale(Input.getAxis(1)),
-					quadraticScale(Input.getAxis(5)),
-					quadraticScale(Input.getAxis(5)));
+		Robot.drivetrain.setSpeed(Input.getAxis(0), Input.getAxis(1), Input.getAxis(5), 0);
 		}
 
 	}
-}
