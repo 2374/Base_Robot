@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2374.robot;
 
 import java.util.ArrayList;
@@ -8,9 +7,11 @@ import java.util.List;
 import org.usfirst.frc.team2374.robot.Controller.ControllerType;
 import org.usfirst.frc.team2374.robot.components.Drivetrain;
 import org.usfirst.frc.team2374.robot.events.Input;
+import org.usfirst.frc.team2374.robot.sensors.PositionTracker;
 
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
+
 public class Robot extends SampleRobot {
 
 	/**
@@ -23,6 +24,7 @@ public class Robot extends SampleRobot {
 	 */
 	public static Drivetrain drivetrain;
 
+	public static PositionTracker positionTracker;
 
 	/**
 	 * Creates the robot and initializes all of its variables and components.
@@ -30,7 +32,8 @@ public class Robot extends SampleRobot {
 	public Robot() {
 		robot = this;
 		drivetrain = new Drivetrain(0, 1, 2, 3);
-		
+		positionTracker = new PositionTracker(4);
+
 	}
 
 	/**

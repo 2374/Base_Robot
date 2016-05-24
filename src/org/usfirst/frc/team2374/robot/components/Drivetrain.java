@@ -38,11 +38,12 @@ public class Drivetrain extends Component {
 	 * @param rightSpeed
 	 *            The speed of the right motors.
 	 */
-	public void setSpeed(double leftSpeed1, double rightSpeed1, double leftSpeed2, double rightSpeed2, double gyroAngle) {
+	public void setSpeed(double leftSpeed1, double rightSpeed1,
+			double leftSpeed2, double rightSpeed2, double gyroAngle) {
 		left1.set(leftSpeed1);
-		right1.set(rightSpeed1);
+		right1.set(-rightSpeed1);
 		left2.set(leftSpeed2);
-		right2.set(rightSpeed2);
+		right2.set(-rightSpeed2);
 	}
 
 	@Override

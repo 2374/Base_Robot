@@ -4,19 +4,12 @@ import org.usfirst.frc.team2374.robot.Robot.RobotSystem;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 
 public class PositionTracker extends RobotSystem {
-
-	/**
-	 * The robot's built-in accelerometer.
-	 */
-	private final BuiltInAccelerometer accelerometer;
-
 	/**
 	 * The robot's gyroscope.
 	 */
-	private final AnalogGyro gyroscope;
+	public static AnalogGyro gyroscope;
 
 	/**
 	 * Creates a new position tracker with gyroscope set to the given port.
@@ -25,7 +18,6 @@ public class PositionTracker extends RobotSystem {
 	 *            The port for the gyroscope.
 	 */
 	public PositionTracker(int gyroPort) {
-		accelerometer = new BuiltInAccelerometer();
 		gyroscope = new AnalogGyro(new AnalogInput(gyroPort));
 		reset();
 	}
@@ -35,7 +27,7 @@ public class PositionTracker extends RobotSystem {
 	 *
 	 * @return The current direction of the robot
 	 */
-	public double direction() {
+	public static double direction() {
 		return gyroscope.getAngle();
 	}
 

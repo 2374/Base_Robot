@@ -7,6 +7,7 @@ import org.usfirst.frc.team2374.robot.Command;
 import org.usfirst.frc.team2374.robot.Component;
 import org.usfirst.frc.team2374.robot.Robot;
 import org.usfirst.frc.team2374.robot.events.Input;
+import org.usfirst.frc.team2374.robot.sensors.PositionTracker;
 
 public class MecanumDriveCommand extends Command {
 
@@ -26,27 +27,6 @@ public class MecanumDriveCommand extends Command {
 		return value * Math.abs(value);
 	}
 
-	@Override
-	public void update() {
-		Robot.drivetrain.setSpeed(normalize(quadraticScale(xInput) + quadraticScale(yInput) + quadraticScale(rotation)),
-				normalize(-quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)),
-				normalize(-quadraticScale(xInput) + quadraticScale(yInput) + quadraticScale(rotation)),
-				normalize(quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)), 0);
-
-	}
-
-	double xInput = Input.getAxis(0);
-	double yInput = Input.getAxis(1);
-	double rotation = Input.getAxis(5);
-
-	// double gyroAngle = PositionTracker.direction();
-
-	/*
-	 * double rotated[] = rotateVector(xInput, yInput, gyroAngle); xInput =
-	 * rotated[0]; yInput = rotated[1];
-	 */
-	// put this back in if we ever want to use a gyroscope
-
 	protected static double normalize(double value) {
 		if (value > 1.0)
 			return 1;
@@ -55,12 +35,33 @@ public class MecanumDriveCommand extends Command {
 		else
 			return value;
 	}
+
+	@Override
+	public void update() {
+		Robot.drivetrain.setSpeed(normalize(quadraticScale(xInput) + quadraticScale(yInput) + quadraticScale(rotation)),
+				normalize(-quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)),
+				normalize(-quadraticScale(xInput) + quadraticScale(yInput) + quadraticScale(rotation)),
+				normalize(quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)), 0);//that 0 would be a gyroscope if we ever want it
+
+	}
+
+	double xInput = Input.getAxis(0);
+	double yInput = Input.getAxis(1);
+	double rotation = Input.getAxis(5);
+	double gyroAngle = PositionTracker.direction();
+
+	double rotated[] = rotateVector(xInput, yInput, gyroAngle);
+	{
+		xInput = rotated[0];
+		yInput = rotated[1];
+	}
+
+	public double[] rotateVector(double xInput, double yInput, double gyroAngle) {
+		double cosA = Math.cos(gyroAngle * (3.14159 / 180.0));
+		double sinA = Math.sin(gyroAngle * (3.14159 / 180.0));
+		double out[] = new double[2];
+		out[0] = xInput * cosA - yInput * sinA;
+		out[1] = xInput * sinA + yInput * cosA;
+		return out;
+	}
 }
-// put this back in if we ever want to use a gyroscope
-/*
- * public static double[] rotateVector(double xInput, double yInput, double
- * gyroAngle) { double cosA = Math.cos(gyroAngle * (3.14159 / 180.0)); double
- * sinA = Math.sin(gyroAngle * (3.14159 / 180.0)); double out[] = new double[2];
- * out[0] = xInput * cosA - yInput * sinA; out[1] = xInput * sinA + yInput *
- * cosA; return out; }
- */
