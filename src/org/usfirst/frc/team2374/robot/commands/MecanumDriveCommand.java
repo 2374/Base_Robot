@@ -41,7 +41,7 @@ public class MecanumDriveCommand extends Command {
 		Robot.drivetrain.setSpeed(normalize(quadraticScale(xInput) + quadraticScale(yInput) + quadraticScale(rotation)),
 				normalize(-quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)),
 				normalize(-quadraticScale(xInput) + quadraticScale(yInput) + quadraticScale(rotation)),
-				normalize(quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)), 0);//that 0 would be a gyroscope if we ever want it
+				normalize(quadraticScale(xInput) + quadraticScale(yInput) - quadraticScale(rotation)), gyroAngle);//change gyroAngle to 0 if we don't have a gyro
 
 	}
 
